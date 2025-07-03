@@ -15,14 +15,14 @@ reg[2:0] rd_addr;
 always @(posedge wr_clk) begin
     if (wr_en_i) begin
         mem [wr_addr] <=data_i;
-        wr_ptr <= wr_ptr + 1;
+        wr_addr <= wr_addr + 1;
     end
 end
 
 always @(posedge rd_clk) begin
     if (rd_en_i) begin
         data_o<=mem[rd_addr];
-        rd_ptr <= rd_ptr + 1;
+        rd_addr <= rd_addr + 1;
     end
 end
 
