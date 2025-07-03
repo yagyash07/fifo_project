@@ -1,4 +1,4 @@
-module ff_2_sync #(parameter Width=1)(
+module ff_2_sync #(parameter Width=4)(
     
     input clk,
     input wire [Width-1:0] D1,
