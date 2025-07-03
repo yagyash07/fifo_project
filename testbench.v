@@ -2,7 +2,7 @@
 
 module ff_2_sync_tb;
 
-    parameter Width = 1;
+    parameter Width = 4;
     reg clk;
     reg rst;
     reg [Width-1:0] D1;
