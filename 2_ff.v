@@ -15,5 +15,6 @@ module ff_2_sync #(parameter Width=4)(
        ff1<=D1;
        ff2<=ff1;
   end
+  end
 
 endmodule
