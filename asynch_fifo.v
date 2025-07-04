@@ -17,7 +17,6 @@ module async_fifo #(parameter depth = 8, parameter d_width = 8)(
     // For depth=8, log2(8) = 3 → 4 bits needed for gray/binary pointers
     wire [3:0] bin_w_ptr, gray_w_ptr, gray_w_ptr_sync;
     wire [3:0] bin_r_ptr, gray_r_ptr, gray_r_ptr_sync;
-    wire [3:0] bin_r_ptr_final;
 
     
     // 1. Dual-port memory
@@ -39,7 +38,7 @@ module async_fifo #(parameter depth = 8, parameter d_width = 8)(
         .full(full_o),
         .w_en(wr_en),
         .gray_r_ptr_syn(gray_r_ptr_sync),
-        .bin_r_ptr(bin_r_ptr_final),
+        .bin_r_ptr(bin_r_ptr),
         .bin_w_ptr(bin_w_ptr),
         .gray_w_ptr(gray_w_ptr)
     );
@@ -52,7 +51,7 @@ module async_fifo #(parameter depth = 8, parameter d_width = 8)(
         .empty(empty_o),
         .r_en(rd_en),
         .gray_w_ptr_syn(gray_w_ptr_sync),
-        .bin_w_ptr(bin_r_ptr_final),
+        .bin_w_ptr(bin_w_ptr),
         .bin_r_ptr(bin_r_ptr),
         .gray_r_ptr(gray_r_ptr)
     );
