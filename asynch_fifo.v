@@ -9,11 +9,10 @@ module async_fifo #(parameter depth = 8, parameter d_width = 8)(
     input [d_width-1:0] wr_data,
     output wire [d_width-1:0] rd_data,
     output wire full_o,
-    output wire empty_o,
-    output wire[3:0] bin_w_ptr_o,bin_r_ptr_o
+    output wire empty_o
+   
 );
-    assign bin_w_ptr_o=bin_w_ptr;
-    assign bin_r_ptr_o=bin_r_ptr;
+ 
     // For depth=8, log2(8) = 3 → 4 bits needed for gray/binary pointers
     wire [3:0] bin_w_ptr, gray_w_ptr, gray_w_ptr_sync;
     wire [3:0] bin_r_ptr, gray_r_ptr, gray_r_ptr_sync;
@@ -23,12 +22,14 @@ module async_fifo #(parameter depth = 8, parameter d_width = 8)(
     dual_mm_port #( .DEPTH(depth) ) mem (
         .wr_clk(wr_clk),
         .rd_clk(rd_clk),
-        .wr_en_i(wr_en & ~full_o),
-        .rd_en_i(rd_en & ~empty_o),
+        .wr_en_i(wr_en),
+        .rd_en_i(rd_en),
         .wr_addr(bin_w_ptr[2:0]), // 3-bit address for depth=8 (clog2(depth))
         .rd_addr(bin_r_ptr[2:0]),
         .data_i(wr_data),
-        .data_o(rd_data)
+        .data_o(rd_data),
+        .full(full_o),
+        .empty(empty_o)
     );
 
     // 2. Write pointer logic
@@ -60,15 +61,15 @@ module async_fifo #(parameter depth = 8, parameter d_width = 8)(
 
     ff_2_sync  uut4 (
         .clk(rd_clk),
-        .D1(gray_w_ptr),
-        .ff2(gray_w_ptr_sync),
+        .d(gray_w_ptr),
+        .q(gray_w_ptr_sync),
         .rst(reset)
     );
 
     ff_2_sync uut5 (
         .clk(wr_clk),
-        .D1(gray_r_ptr),
-        .ff2(gray_r_ptr_sync),
+        .d(gray_r_ptr),
+        .q(gray_r_ptr_sync),
         .rst(reset)
     );
 
