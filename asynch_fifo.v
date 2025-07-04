@@ -9,9 +9,11 @@ module async_fifo #(parameter depth = 8, parameter d_width = 8)(
     input [d_width-1:0] wr_data,
     output wire [d_width-1:0] rd_data,
     output wire full_o,
-    output wire empty_o
+    output wire empty_o,
+    output wire[3:0] bin_w_ptr_o,bin_r_ptr_o
 );
-
+    assign bin_w_ptr_o=bin_w_ptr;
+    assign bin_r_ptr_o=bin_r_ptr;
     // For depth=8, log2(8) = 3 → 4 bits needed for gray/binary pointers
     wire [3:0] bin_w_ptr, gray_w_ptr, gray_w_ptr_sync;
     wire [3:0] bin_r_ptr, gray_r_ptr, gray_r_ptr_sync;
