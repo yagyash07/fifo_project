@@ -8,6 +8,8 @@ module dual_mm_tb();
     reg rd_en_i;
     reg [7:0] data_i;
     wire [7:0] data_o;
+    reg full;
+    reg empty;
 
 dual_mm_port #(DEPTH) uut(
     .wr_clk(wr_clk),
@@ -15,7 +17,9 @@ dual_mm_port #(DEPTH) uut(
     .wr_en_i(wr_en_i),
     .rd_en_i(rd_en_i),
     .data_i(data_i),
-    .data_o(data_o)
+    .data_o(data_o),
+    .empty(empty),
+    .full(full)
 
 );
 integer i;
