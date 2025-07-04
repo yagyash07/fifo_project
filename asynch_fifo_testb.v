@@ -9,7 +9,6 @@ module async_fifo_tb();
     reg reset;
     reg wr_en;
     reg rd_en;
-    wire [3:0]bin_w_ptr_o,bin_r_ptr_o;
     wire full_o;
     wire empty_o;
     reg [d_width-1:0] wr_data;
@@ -25,11 +24,10 @@ module async_fifo_tb();
         .wr_data(wr_data),
         .rd_data(rd_data),
         .full_o(full_o),
-        .empty_o(empty_o),
-        .bin_r_ptr_o(bin_r_ptr_o),
-        .bin_w_ptr_o(bin_w_ptr_o)
+        .empty_o(empty_o)
+        
     );
-  
+        
     // Clocks
     always #5 wr_clk = ~wr_clk;
     always #10 rd_clk = ~rd_clk;
@@ -46,7 +44,7 @@ module async_fifo_tb();
  reset=1'b0;  wr_en=1;rd_en=0;wr_data=8'd23;#25
  reset=1'b0;  wr_en=1;rd_en=0;wr_data=8'd27;#25
  reset=1'b0;  wr_en=1;rd_en=0;wr_data=8'd22;#25
- reset=1'b0;  wr_en=1;rd_en=0;wr_data=8'd12;#25    
+ reset=1'b0;  wr_en=1;rd_en=0;wr_data=8'd12;#25   
  reset=1'b0;  wr_en=0;rd_en=1;wr_data=8'd27;#25   
  reset=1'b0;  wr_en=0;rd_en=1;wr_data=8'd22;#25 
  reset=1'b0;  wr_en=0;rd_en=1;wr_data=8'd14;#25 
